@@ -1,0 +1,66 @@
+# 编译生成的二进制文件
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# 依赖缓存目录
+vendor/
+Gopkg.lock
+
+# Go 测试覆盖率文件
+*.out
+
+# 编辑器和 IDE 配置
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 操作系统生成的文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 环境变量和敏感信息
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 日志文件
+*.log
+logs/
+
+# 临时文件
+tmp/
+temp/
+
+# 数据目录
+/data/
+
+# Docker 相关
+.docker/
+docker-compose.override.yml
+
+# 构建目录
+build/
+out/
+
+# IDE 项目文件
+*.iml
+*.ipr
+*.iws
+
+# 其他临时文件
+*.bak
+*.tmp
+*.temp
+.cache/
