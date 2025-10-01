@@ -2,9 +2,10 @@ package stage03embed
 
 import (
 	"context"
-	"git
 	"os"
 	"time"
+
+	"github.com/cloudwego/eino-ext/components/embedding/ark"
 )
 
 func EmbedTtext() {
