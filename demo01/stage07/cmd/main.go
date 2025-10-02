@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"demo01/stage07"
+	"einolearn/demo01/stage07"
 	"fmt"
 )
 

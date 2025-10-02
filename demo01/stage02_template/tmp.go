@@ -2,7 +2,8 @@ package stage02template
 
 import (
 	"context"
-	"demo01/env"
+	"einolearn/demo01/env"
+
 	"fmt"
 
 	"github.com/cloudwego/eino/components/prompt"

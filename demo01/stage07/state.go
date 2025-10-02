@@ -2,14 +2,23 @@ package stage07
 
 import (
 	"context"
-	"demo01/env"
-	"os"
+	"einolearn/demo01/env"
+	"fmt"
 
 	"github.com/cloudwego/eino/compose"
 	"github.com/cloudwego/eino/schema"
 )
 
-func Graph(ctx context.Context) *compose.Graph[map[string]string, *schema.Message] {
+type State struct {
+	History map[string]any
+}
+
+func genFunc(ctx context.Context) *State {
+	return &State{
+		History: make(map[string]any),
+	}
+}
+func GraphWithState(ctx context.Context, input map[string]string) {
 	g := compose.NewGraph[map[string]string, *schema.Message](compose.WithGenLocalState(genFunc))
 	lambda := compose.InvokableLambda(func(ctx context.Context, input map[string]string) (map[string]string, error) {
 		compose.ProcessState[*State](ctx, func(_ context.Context, state *State) error {
@@ -60,7 +69,7 @@ func Graph(ctx context.Context) *compose.Graph[map[string]string, *schema.Messag
 
 	model, err := env.EnvNewChatModel()
 	if err != nil {
-		return nil
+		return
 	}
 
 	err = g.AddLambdaNode("lambda", lambda)
@@ -106,57 +115,18 @@ func Graph(ctx context.Context) *compose.Graph[map[string]string, *schema.Messag
 	if err != nil {
 		panic(err)
 	}
-	return g
 
-}
-func OutSideOrcGraph(ctx context.Context) *compose.Graph[map[string]string, string] {
-	insideGraph := Graph(ctx)
-	//外部图
-	outsideGraph := compose.NewGraph[map[string]string, string]()
-	//创建节点
-	lambda := compose.InvokableLambda(func(ctx context.Context, input map[string]string) (output map[string]string, err error) {
-		return input, nil
-	})
-	writeLambda := compose.InvokableLambda(func(ctx context.Context, input *schema.Message) (output string, err error) {
-		f, err := os.OpenFile("orc_graph_withgraph.md", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-		if err != nil {
-			return "", err
-		}
-		defer f.Close()
-		if _, err := f.WriteString(input.Content + "\n---\n"); err != nil {
-			return "", err
-		}
-		return "已经写入文件，请前往文件内查看内容", nil
-	})
-	//添加节点
-	err := outsideGraph.AddLambdaNode("lambda", lambda)
+	// 编译
+	r, err := g.Compile(ctx)
 	if err != nil {
 		panic(err)
 	}
-	err = outsideGraph.AddGraphNode("inside", insideGraph)
+
+	// 执行
+	answer, err := r.Invoke(ctx, input, compose.WithCallbacks(genCallback()))
 	if err != nil {
 		panic(err)
 	}
-	err = outsideGraph.AddLambdaNode("write", writeLambda)
-	if err != nil {
-		panic(err)
-	}
-	//链接节点
-	err = outsideGraph.AddEdge(compose.START, "lambda")
-	if err != nil {
-		panic(err)
-	}
-	err = outsideGraph.AddEdge("lambda", "inside")
-	if err != nil {
-		panic(err)
-	}
-	err = outsideGraph.AddEdge("inside", "write")
-	if err != nil {
-		panic(err)
-	}
-	err = outsideGraph.AddEdge("write", compose.END)
-	if err != nil {
-		panic(err)
-	}
-	return outsideGraph
+	fmt.Println(answer.Content)
+
 }

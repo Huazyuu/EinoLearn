@@ -1,6 +1,6 @@
 package main
 
-import "demo01/stage06"
+import "einolearn/demo01/stage06"
 
 func main() {
 	// stage06.Chain()

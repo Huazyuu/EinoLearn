@@ -2,7 +2,7 @@ package indexer
 
 import (
 	"context"
-	"demo01/stage04_RAG/milvusCli"
+	"einolearn/demo01/stage04_RAG/milvusCli"
 	"log"
 	"os"
 	"time"

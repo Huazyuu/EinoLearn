@@ -1,9 +1,9 @@
 package main
 
 import (
-	"demo01/stage04_RAG/indexer"
-	"demo01/stage04_RAG/retriever"
-	"demo01/stage04_RAG/trans"
+	"einolearn/demo01/stage04_RAG/indexer"
+	"einolearn/demo01/stage04_RAG/retriever"
+	"einolearn/demo01/stage04_RAG/trans"
 	"fmt"
 )
 

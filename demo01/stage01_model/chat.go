@@ -2,7 +2,7 @@ package stage01model
 
 import (
 	"context"
-	"demo01/env"
+	"einolearn/demo01/env"
 	"fmt"
 
 	"github.com/cloudwego/eino/schema"

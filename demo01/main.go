@@ -1,7 +1,7 @@
 package main
 
 import (
-	stage03embed "demo01/stage03_embed"
+	stage03embed "einolearn/demo01/stage03_embed"
 )
 
 func main() {

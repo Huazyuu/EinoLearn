@@ -2,8 +2,8 @@ package retriever
 
 import (
 	"context"
-	"demo01/stage04_RAG/indexer"
-	"demo01/stage04_RAG/milvusCli"
+	"einolearn/demo01/stage04_RAG/indexer"
+	"einolearn/demo01/stage04_RAG/milvusCli"
 	"os"
 	"time"
 
